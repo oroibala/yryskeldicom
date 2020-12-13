@@ -7,6 +7,10 @@ app.get('/', (request, response) => {
    response.sendFile(path.join(__dirname, 'public', 'index.html')); 
 });
 
+app.get('/decaLib', (request, response) => {
+   response.sendFile(path.join(__dirname, 'public', 'dwLibrary.html'))
+})
+
 
 
 const port = process.env.PORT || 3000;
