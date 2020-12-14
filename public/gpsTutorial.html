@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Outdoor Positioning</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="jumbotron jumbotron-fluid">
+            <img src="images/JackieChan.png" class="mx-auto d-block" alt="Milky way"> 
+            <h1 class="display-1" style="text-align: center;">How to use GPS?????</h1>
+        </div>
+        <div style="text-align: center;">
+        <h1>Arduino UNO</h1>
+        <p>To use GPS module with Arduino UNO we need to visit <a href="https://github.com/oledarduino/outdoorPositioningWithGPS/blob/master/Arduino%20Files/GPSwithArduinoUNO/GPSwithArduinoUNO.ino">this link</a> and upload the code in our board. GY-GPS6MV2 was used.</p>
+        
+        <p>After uploading the code, open your serial monitor. There you should see many lines of constantly coming (every second) data starting with "$GP". </p>
+        
+        <p>Each line represents some data, more info can be found <a href="http://aprs.gids.nl/nmea/">here</a>. Depending on your needs you can extract the data from those lines.</p>
+        
+        <p>For instance, if we need the location data, we can get it from "$GPRMC" line.<pre>$GPRMC,052708.00,A,3722.65023,N,12639.97934,E,0.652,338.57,280620,,,A*6A</pre> </p>
+        <code>052708.00</code> represents the time stamp, it means 05:27:08 UTC. <br>
+        <code>A</code> shows if the data is coming (<code>A = YES | V = NO</code>) <br>
+        <code>3722.65023, N</code> shows that the Lattitude is 37 degrees 22.65023 minutes North (<code>N-north, S-south</code>) <br>
+        <code>12639.97934, E</code> shows that the Longitude is 126 degrees 39.97934 minutes East (<code>E-east, W-west</code>) <br>
+        <code>0</code> after <code>E</code> shows us the speed of the module in knots (<code>1 Knot = 0.514444 m/s</code>) <br>
+        Etc. 
+        <br>
+        <hr>
+        <br>
+        <h4>
+            To make positioning more precise we can use two GPS modules. 
+            We put one module in a static location we know. 
+            Then we collect the location data from it and calculate it's error compared to the location we know. 
+            When we know the error from one GPS module, we can apply it to the second module and get more precise location of the second module (given they get the data from the same sattelites and are located relatively close).
+            To accomplish this goal, we can use Wi-Fi modules to send the error data from the first module to the second or our local machine. 
+            Here we will send the location of both modules to our local machine, calculate the error from the first one and apply it to the second. 
+            There are many different Wi-Fi modules.Here we will try ESP8266 and ESP32. To process the data we can use Python 3, but let's see the Arduino code first    
+        <br><br><hr><br>
+        <h1>ESP8266</h1>
+        <p>To use GPS module with ESP8266 we need to visit <a href="https://github.com/oledarduino/outdoorPositioningWithGPS/blob/master/Arduino%20Files/GPSwithESP8266/GPSwithESP8266.ino">this link</a> and upload the code in our board. 
+            The code explanation can be found in the code itself. </p>
+        <h1>ESP32</h1>
+        <p>To use GPS module with ESP32 we need to visit <a href="https://github.com/oledarduino/outdoorPositioningWithGPS/blob/master/Arduino%20Files/GPSwithESP32/GPSwithESP32.ino">this link</a> and upload the code in our board. 
+            The code explanation is in the code itself.</p>
+
+        <p>If you have never used your Arduino IDE for ESP32 or ESP8266, you will need to make a small setup. First open your Arduino IDE and press <kbd>ctrl + ,</kbd> to open Preferences of your IDE. There should be a line (Additional Boards Manager URLs) to put some text.
+        In that place you have to paste this link for ESP32 <a href="https://dl.espressif.com/dl/package_esp32_index.json">https://dl.espressif.com/dl/package_esp32_index.json</a> or this link for ESP8266 <a href="http://arduino.esp8266.com/stable/package_esp8266com_index.json">http://arduino.esp8266.com/stable/package_esp8266com_index.json</a>. After that go to Tools/Board/Boards Manager and type either ESP32 or ESP8266 in the search bar. Then you can install it.</p>
+        <br>
+        <hr>
+        <br>
+        <h4>
+            After we upload the code in our Wi-Fi modules, we can process the data locally.
+        </h4>
+
+        <h2>Post Processing</h2>
+
+        <h5>To calculate more precise location data, we will use Python 3 on our local machine.
+             Telnet will be used to send the data from our Wi-Fi modules to the Python 3 program we will write and processed locally. 
+            To see the code you can visit <a href="https://github.com/oledarduino/outdoorPositioningWithGPS/blob/master/Python%20Files/locationProcessing.py"> this link</a>.</h5>
+        </div>
+    </body>
+</html>
