@@ -11,6 +11,10 @@ app.get('/decaLib', (request, response) => {
    response.sendFile(path.join(__dirname, 'public', 'dwLibrary.html'))
 })
 
+app.get('/gps/gy', (request, response) => {
+   response.sendFile(path.join(__dirname, 'public', 'gpsTutorial.html'))
+});
+
 
 
 const port = process.env.PORT || 3000;
