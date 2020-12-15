@@ -36,6 +36,14 @@
     </h3>
     <p>
         enalbleClock(0x00)
+        <br>
+        delay of 500us as recommended by the user manual
+        <br>
+        if _rst pin was assigned, set it as input
+        <br>
+        reset()
+        <br>
+
     </p>
     <br><br><br>
     <h3>
@@ -63,12 +71,69 @@
         <br>
         writeBytes(0x36, 0x00, pmscctrl0, 2)
     </p>
+    <br><br><br>
+
+
     <h3>
-        readBytes(byte cmd, uint16 offset, byte[] data, uint16 n)
+        DW1000.readBytes(byte cmd, uint16 offset, byte[] data, uint16 n)
     </h3>
     <p>
         create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
         <br>
     </p>
+    <br><br><br>
+
+
+    <h3>
+        DW1000.writeBytes(byte cmd, uint16 offset, byte[] data, uint16 n)
+    </h3>
+    <p>
+        create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
+        <br>
+    </p>
+    <br><br><br>
+
+    <h3>
+        DW1000.reset()
+    </h3>
+    <p>
+        if _rst is not set, do softReset()
+        <br>
+        otherwise:
+        <br>
+        set _rst as an output and assign LOW, then delay for 2000us and then set _rst as input and delay for 10ms
+        <br>
+        idle()
+    </p>
+    <br><br><br>
+
+    <h3>
+        DW1000.idle()
+    </h3>
+    <p>
+        set 0 to each element of array _sysctrl (_sysctrl.length = 4)
+        <br>
+        setBit(_sysctrl, 4, 6, true) --> 
+        <br>
+
+    </p>
+    <br><br><br>
+
+
+    <h3>
+        DW1000.softReset()
+    </h3>
+    <p>
+        TODO
+    </p>
+    <br><br><br>
+
+    <h3>
+        DW1000.setBit()
+    </h3>
+    <p>
+
+    </p>
+    <br><br><br>
 </body>
 </html>
