@@ -90,7 +90,10 @@
     <p>
         create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
         <br>
+
     </p>
+
+    
     <br><br><br>
 
     <h3>
@@ -113,8 +116,15 @@
     <p>
         set 0 to each element of array _sysctrl (_sysctrl.length = 4)
         <br>
-        setBit(_sysctrl, 4, 6, true) --> 
+        setBit(_sysctrl, 4, 6, true) --> set the 3rd bit of the first byte int _sysctrl to 1. TODO: identify why
         <br>
+        set _deviceMode to 0x00 TODO: identify why
+        <br>
+        writeBytes(0x0D, 0xFF, _sysctrl, 4) 
+        <br> 
+        0x0D refers to System Control Register
+        <br>
+        0xFF means there is no sub address
 
     </p>
     <br><br><br>
@@ -129,10 +139,16 @@
     <br><br><br>
 
     <h3>
-        DW1000.setBit()
+        DW1000.setBit(byte data[], uint16 n, uint16 bit, boolean val)
     </h3>
     <p>
-
+        check if the index of the bit is out of bounds
+        <br>
+        get out the first byte in data[] and get the index of the bit that we want to set.
+        <br>
+        if val is true, we set the bit at the location bit % 8 of the first byte array in data[] to 1 (bitSet)
+        <br>
+        otherwise we clear the bit i.e. set it to 0 (clearBit)
     </p>
     <br><br><br>
 </body>
