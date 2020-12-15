@@ -11,171 +11,249 @@
     </h1>
     <br><br><br>
 
+
+
     <hr>
     <h3>
        DW1000.begin(irq, rst) 
     </h3>
-    <p>
-        a delay of 500us as stated in the usage manual
-        <br>
-        set the interrupt pin as an input, as interrupts come from the module to the microprocessor
-        <br>
-        initilalize SPI Bus (set sck, mosi and cs as outputs and set sck and mosi to low and cs as high)
-        <br>
-        set pin irq as an interrupt for SPI (to stop transaction is case of interrupt)
-        <br>
-        set rst and irq to the corresponding global variables
-        <br>
-        set _deviceMode to 0x00  (TODO: identify why)
-        <br>
+        <p>
+            a delay of 500us as stated in the usage manual
+            <br>
+            set the interrupt pin as an input, as interrupts come from the module to the microprocessor
+            <br>
+            initilalize SPI Bus (set sck, mosi and cs as outputs and set sck and mosi to low and cs as high)
+            <br>
+            set pin irq as an interrupt for SPI (to stop transaction is case of interrupt)
+            <br>
+            set rst and irq to the corresponding global variables
+            <br>
+            set _deviceMode to 0x00  (TODO: identify why)
+            <br>
 
-        run handleInterrupt when the the irq pin goes from low to high
-    </p>
-    <br><br><br>
+            run handleInterrupt when the the irq pin goes from low to high
+        </p>
+        <br><br><br>
+
+
+
 
     
     <h3>
         DW1000.select(ss)
     </h3>
-    <p>
-        enalbleClock(0x00)
-        <br>
-        delay of 500us as recommended by the user manual
-        <br>
-        if _rst pin was assigned, set it as input
-        <br>
-        reset()
-        <br>
+        <p>
+            enalbleClock(0x00)
+            <br>
+            delay of 500us as recommended by the user manual
+            <br>
+            if _rst pin was assigned, set it as input
+            <br>
+            reset()
+            <br>
+            writeValueToBytes
+            <br>
+            writeNetworkIdAndDeviceAddress
+            <br>
+            set all the bytes of _syscfg to 0
+            <br>
+            set the 5th bit of the second byte in _syscfg to 1
+            <br>
+            set the second bit of the second byte in _syscfg to 1
 
-    </p>
+
+        </p>
     <br><br><br>
     
     
+
+
     
     <h3>
         DW1000.enableClock(byte clock)
     </h3>
     <h4>TODO: identify each operation one by one</h4>
-    <p>
-        create an array of 4 bytes (pmscctrl0) and set all the values to 0 with memset
-        <br>
-        readBytes(0x36, 0x00, pmscctrl0, 4) --> should return 4 octet message to pmscctrl0
-        <br>
-        0x36 refers to Power Management and System Control register
-        <br>
-        0x00 offset referst to PMSC Control Register 0
-        <hr>
-        <br>
-        if the clock is 0x00 --> change spi speed to _fastSPI and set pmscctrl0[0] to 0x00 and do pmscctrl0[1] &= 0xFE TODO: identify exactly why
-        <hr>
-        <br>
-        if the clock is 0x01 --> change spi speed to _slowSPI and do pmscctrl0[0] &= 0xFC and do pmscctrl0[0] |= 0x01 TODO: identify exactly why
-        <hr>
-        <br>
-        if the clock is 0x02 --> change spi speed to _fastSPI and do pmscctrl0[0] &= 0xFC and do pmscctrl0[0] |= 0x02 TODO: identify exactly why
-        <hr>
-        <br>
-        writeBytes(0x36, 0x00, pmscctrl0, 2)
-    </p>
-    <br><br><br>
+        <p>
+            create an array of 4 bytes (pmscctrl0) and set all the values to 0 with memset
+            <br>
+            readBytes(0x36, 0x00, pmscctrl0, 4) --> should return 4 octet message to pmscctrl0
+            <br>
+            0x36 refers to Power Management and System Control register
+            <br>
+            0x00 offset referst to PMSC Control Register 0
+            <hr>
+            <br>
+            if the clock is 0x00 --> change spi speed to _fastSPI and set pmscctrl0[0] to 0x00 and do pmscctrl0[1] &= 0xFE TODO: identify exactly why
+            <hr>
+            <br>
+            if the clock is 0x01 --> change spi speed to _slowSPI and do pmscctrl0[0] &= 0xFC and do pmscctrl0[0] |= 0x01 TODO: identify exactly why
+            <hr>
+            <br>
+            if the clock is 0x02 --> change spi speed to _fastSPI and do pmscctrl0[0] &= 0xFC and do pmscctrl0[0] |= 0x02 TODO: identify exactly why
+            <hr>
+            <br>
+            writeBytes(0x36, 0x00, pmscctrl0, 2)
+        </p>
+        <br><br><br>
+
+
 
 
     <h3>
         DW1000.readBytes(byte cmd, uint16 offset, byte[] data, uint16 n)
     </h3>
-    <p>
-        create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
-        <br>
-    </p>
-    <br><br><br>
+        <p>
+            create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
+            <br>
+        </p>
+        <br><br><br>
+
+
+
 
 
     <h3>
         DW1000.writeBytes(byte cmd, uint16 offset, byte[] data, uint16 n)
     </h3>
-    <p>
-        create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
-        <br>
+        <p>
+            create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
+            <br>
 
-    </p>    
-    <br><br><br>
+        </p>    
+        <br><br><br>
+
+
+
 
 
     <h3>
         DW1000.writeValueToBytes(byte data[], int32 val, uint16 n)
     </h3>
-    <p>
-        fill in data[] with val shifted right and some operations applied TODO: find out later
-    </p>
-    <br><br><br>
+        <p>
+            fill in data[] with val shifted right and some operations applied TODO: find out later
+        </p>
+        <br><br><br>
+
+
 
     <h3>
         DW1000.writeNetworkIdAndDeviceAddress()
     </h3>
-    <p>
-        writeBytes(0x03, 0xFF, _networkAndAdress, 4)
-        <br>
-        0x03 refers to PAN identifier and Short Address
-        <br>
-        0xFF means there is not sub address
-    </p>
-    <br><br><br>
+        <p>
+            writeBytes(0x03, 0xFF, _networkAndAdress, 4)
+            <br>
+            0x03 refers to PAN identifier and Short Address
+            <br>
+            0xFF means there is not sub address
+        </p>
+        <br><br><br>
 
+
+
+
+    <h3>
+        DW1000.setDoubleBuffering(boolean val) 
+    </h3>
+        <p>
+            setBit(_syscfg, 4, 12, !val)  TODO: why !val
+            <br>
+            bit at index 4 of the second byte will be !val
+        </p>
+        <br><br><br>
+
+
+
+
+    
+    
+    <h3>
+        DW1000.setInterruptPolarity(boolean val)
+    </h3>
+        <p>
+            setBit(_syscfg, 4, 9, val)
+            <br>
+            bit at index 1 of the second byte will be val
+        </p>
+        <br><br><br>
+
+
+
+    
+    <h3>
+        DW1000.writeSystemConfigurationRegister()
+    </h3>
+        <p>
+            writeBytes(0x04, 0xFF, _syscfg, 4)
+            <br>
+            0x04 refers to System configuration Bitmap
+            <br>
+            oxFF means no sub adress
+        </p>
 
     <h3>
         DW1000.reset()
     </h3>
-    <p>
-        if _rst is not set, do softReset()
-        <br>
-        otherwise:
-        <br>
-        set _rst as an output and assign LOW, then delay for 2000us and then set _rst as input and delay for 10ms
-        <br>
-        idle()
-    </p>
-    <br><br><br>
+        <p>
+            if _rst is not set, do softReset()
+            <br>
+            otherwise:
+            <br>
+            set _rst as an output and assign LOW, then delay for 2000us and then set _rst as input and delay for 10ms
+            <br>
+            idle()
+        </p>
+        <br><br><br>
+
+
+
+        
+
 
     <h3>
         DW1000.idle()
     </h3>
-    <p>
-        set 0 to each element of array _sysctrl (_sysctrl.length = 4)
-        <br>
-        setBit(_sysctrl, 4, 6, true) --> set the 3rd bit of the first byte int _sysctrl to 1. TODO: identify why
-        <br>
-        set _deviceMode to 0x00 TODO: identify why
-        <br>
-        writeBytes(0x0D, 0xFF, _sysctrl, 4) 
-        <br> 
-        0x0D refers to System Control Register
-        <br>
-        0xFF means there is no sub address
+        <p>
+            set 0 to each element of array _sysctrl (_sysctrl.length = 4)
+            <br>
+            setBit(_sysctrl, 4, 6, true) --> set the 3rd bit of the first byte int _sysctrl to 1. TODO: identify why
+            <br>
+            set _deviceMode to 0x00 TODO: identify why
+            <br>
+            writeBytes(0x0D, 0xFF, _sysctrl, 4) 
+            <br> 
+            0x0D refers to System Control Register
+            <br>
+            0xFF means there is no sub address
 
-    </p>
-    <br><br><br>
+        </p>
+        <br><br><br>
+
+
 
 
     <h3>
         DW1000.softReset()
     </h3>
-    <p>
-        TODO
-    </p>
-    <br><br><br>
+        <p>
+            TODO
+        </p>
+        <br><br><br>
+
+
+
 
     <h3>
         DW1000.setBit(byte data[], uint16 n, uint16 bit, boolean val)
     </h3>
-    <p>
-        check if the index of the bit is out of bounds
-        <br>
-        get out the first byte in data[] and get the index of the bit that we want to set.
-        <br>
-        if val is true, we set the bit at the location bit % 8 of the first byte array in data[] to 1 (bitSet)
-        <br>
-        otherwise we clear the bit i.e. set it to 0 (clearBit)
-    </p>
-    <br><br><br>
+        <p>
+            check if the index of the bit is out of bounds
+            <br>
+            get out the first byte in data[] and get the index of the bit that we want to set.
+            <br>
+            if val is true, we set the bit at the location bit % 8 of the first byte array in data[] to 1 (bitSet)
+            <br>
+            otherwise we clear the bit i.e. set it to 0 (clearBit)
+        </p>
+        <br><br><br>
 </body>
 </html>
