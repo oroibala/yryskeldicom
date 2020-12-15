@@ -9,6 +9,8 @@
     <h1>
         Decawave Library usage tutorial
     </h1>
+    <br><br><br>
+
     <hr>
     <h3>
        DW1000.begin(irq, rst) 
@@ -31,6 +33,7 @@
     </p>
     <br><br><br>
 
+    
     <h3>
         DW1000.select(ss)
     </h3>
@@ -46,6 +49,9 @@
 
     </p>
     <br><br><br>
+    
+    
+    
     <h3>
         DW1000.enableClock(byte clock)
     </h3>
@@ -91,10 +97,30 @@
         create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
         <br>
 
-    </p>
-
-    
+    </p>    
     <br><br><br>
+
+
+    <h3>
+        DW1000.writeValueToBytes(byte data[], int32 val, uint16 n)
+    </h3>
+    <p>
+        fill in data[] with val shifted right and some operations applied TODO: find out later
+    </p>
+    <br><br><br>
+
+    <h3>
+        DW1000.writeNetworkIdAndDeviceAddress()
+    </h3>
+    <p>
+        writeBytes(0x03, 0xFF, _networkAndAdress, 4)
+        <br>
+        0x03 refers to PAN identifier and Short Address
+        <br>
+        0xFF means there is not sub address
+    </p>
+    <br><br><br>
+
 
     <h3>
         DW1000.reset()
