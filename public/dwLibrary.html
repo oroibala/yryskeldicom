@@ -15,17 +15,60 @@
     </h3>
     <p>
         a delay of 500us as stated in the usage manual
+        <br>
         set the interrupt pin as an input, as interrupts come from the module to the microprocessor
+        <br>
         initilalize SPI Bus (set sck, mosi and cs as outputs and set sck and mosi to low and cs as high)
+        <br>
         set pin irq as an interrupt for SPI (to stop transaction is case of interrupt)
+        <br>
         set rst and irq to the corresponding global variables
+        <br>
         set _deviceMode to 0x00
+        <br>
 
         run handleInterrupt when the the irq pin goes from low to high
     </p>
 
-    
 
+    <h3>
+        DW1000.select(ss)
+    </h3>
+    <p>
+        enalbleClock(0x00)
+    </p>
 
+    <h3>
+        DW1000.enableClock(byte clock)
+    </h3>
+    <h4>TODO: identify each operation one by one</h4>
+    <p>
+        create an array of 4 bytes (pmscctrl0) and set all the values to 0 with memset
+        <br>
+        readBytes(0x36, 0x00, pmscctrl0, 4) --> should return 4 octet message to pmscctrl0
+        <br>
+        0x36 refers to Power Management and System Control register
+        <br>
+        0x00 offset referst to PMSC Control Register 0
+        <hr>
+        <br>
+        if the clock is 0x00 --> change spi speed to _fastSPI and set pmscctrl0[0] to 0x00 and do pmscctrl0[1] &= 0xFE TODO: identify exactly why
+        <hr>
+        <br>
+        if the clock is 0x01 --> change spi speed to _slowSPI and do pmscctrl0[0] &= 0xFC and do pmscctrl0[0] |= 0x01 TODO: identify exactly why
+        <hr>
+        <br>
+        if the clock is 0x02 --> change spi speed to _fastSPI and do pmscctrl0[0] &= 0xFC and do pmscctrl0[0] |= 0x02 TODO: identify exactly why
+        <hr>
+        <br>
+        writeBytes(0x36, 0x00, pmscctrl0, 2)
+    </p>
+    <h3>
+        readBytes(byte cmd, uint16 offset, byte[] data, uint16 n)
+    </h3>
+    <p>
+        create a byte array of size 3 (the maximum size of the header), set the the size to 1 and some arbitrary int to 0
+        <br>
+    </p>
 </body>
 </html>
