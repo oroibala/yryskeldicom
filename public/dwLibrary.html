@@ -9,5 +9,23 @@
     <h1>
         Decawave Library usage tutorial
     </h1>
+    <hr>
+    <h3>
+       DW1000.begin(irq, rst) 
+    </h3>
+    <p>
+        a delay of 500us as stated in the usage manual
+        set the interrupt pin as an input, as interrupts come from the module to the microprocessor
+        initilalize SPI Bus (set sck, mosi and cs as outputs and set sck and mosi to low and cs as high)
+        set pin irq as an interrupt for SPI (to stop transaction is case of interrupt)
+        set rst and irq to the corresponding global variables
+        set _deviceMode to 0x00
+
+        run handleInterrupt when the the irq pin goes from low to high
+    </p>
+
+    
+
+
 </body>
 </html>
