@@ -60,7 +60,26 @@
             set the 5th bit of the second byte in _syscfg to 1
             <br>
             set the second bit of the second byte in _syscfg to 1
-
+            <br>
+            writeSystemConfigurationRegister
+            <br>
+            set all bytes of _sysmask to 0
+            <br>
+            writeSystemEventMastRegister
+            <br>
+            enableClock(0x01)
+            <br>
+            delay of 500us
+            <br>
+            manageLDE TODO: go over later
+            <br>
+            delay of 500us
+            <br>
+            enableClock(0x00)
+            <br>
+            delay of 500us
+            <br>
+            read temp and vbat TODO: go over it later
 
         </p>
     <br><br><br>
@@ -152,6 +171,20 @@
 
 
     <h3>
+        DW1000.writeSystemEventMastRegister()
+    </h3>
+        <p>
+            writeBytes(0x0E, 0xFF, _sysmask, 4)
+            <br>
+            0x0E refers to System Event Mask Register
+            <br>
+            oxFF means there is no sub adress
+        </p>
+
+
+
+
+    <h3>
         DW1000.setDoubleBuffering(boolean val) 
     </h3>
         <p>
@@ -206,7 +239,7 @@
 
 
 
-        
+
 
 
     <h3>
